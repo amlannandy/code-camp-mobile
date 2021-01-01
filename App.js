@@ -1,19 +1,36 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import AppLoading from 'expo-app-loading';
+import * as Font from 'expo-font';
+import React, { useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 
-export default function App() {
+import RootNavigator from './src/navigator/RootNavigator';
+
+const fetchFonts = () => {
+  return Font.loadAsync({
+    lato: require('./assets/fonts/Lato-Regular.ttf'),
+    'lato-bold': require('./assets/fonts/Lato-Bold.ttf'),
+    varela: require('./assets/fonts/Varela-Regular.ttf'),
+  });
+};
+
+const App = () => {
+  const [fontLoaded, setFontLoaded] = useState(false);
+
+  if (!fontLoaded) {
+    return (
+      <AppLoading
+        startAsync={fetchFonts}
+        onFinish={() => setFontLoaded(true)}
+        onError={() => console.log('Error loading fonts!')}
+      />
+    );
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Hello World</Text>
-    </View>
+    <NavigationContainer>
+      <RootNavigator />
+    </NavigationContainer>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
