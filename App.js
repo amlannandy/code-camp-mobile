@@ -1,8 +1,10 @@
-import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
+import { Provider } from 'react-redux';
 import React, { useState } from 'react';
+import AppLoading from 'expo-app-loading';
 import { NavigationContainer } from '@react-navigation/native';
 
+import store from './src/store/store';
 import RootNavigator from './src/navigator/RootNavigator';
 
 const fetchFonts = () => {
@@ -27,9 +29,11 @@ const App = () => {
   }
 
   return (
-    <NavigationContainer>
-      <RootNavigator />
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <RootNavigator />
+      </NavigationContainer>
+    </Provider>
   );
 };
 
