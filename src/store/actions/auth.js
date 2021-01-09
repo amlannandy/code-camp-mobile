@@ -1,4 +1,4 @@
-import { AsyncStorage, ToastAndroid } from 'react-native';
+import { AsyncStorage } from 'react-native';
 
 import {
   LOGIN,
@@ -17,7 +17,7 @@ export const login = (email, password, nav) => async dispatch => {
     await AsyncStorage.setItem('code-camp-token', data.token);
     const userData = await getCurrentUser(data.token);
     dispatch({ type: LOGIN, payload: userData });
-    nav.replace('home');
+    nav.replace('tab');
   } catch (error) {
     console.log(error);
   }
@@ -31,7 +31,7 @@ export const register = (user, nav) => async dispatch => {
     await AsyncStorage.setItem('code-camp-token', data.token);
     const userData = await getCurrentUser(data.token);
     dispatch({ type: REGISTER, payload: userData });
-    nav.replace('home');
+    nav.replace('tab');
   } catch (error) {
     console.log(error);
   }
