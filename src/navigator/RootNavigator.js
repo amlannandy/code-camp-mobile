@@ -7,9 +7,11 @@ import TestScreen from '../screens/TestScreen';
 
 const Stack = createStackNavigator();
 
-const RootNavigator = () => {
+const RootNavigator = ({ isAuthenticated = false }) => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator
+      initialRouteName={isAuthenticated ? 'home' : 'login'}
+      screenOptions={{ headerShown: false }}>
       <Stack.Screen name='login' component={LoginScreen} />
       <Stack.Screen name='register' component={RegisterScreen} />
       <Stack.Screen name='home' component={TestScreen} />

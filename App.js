@@ -5,6 +5,7 @@ import AppLoading from 'expo-app-loading';
 import { NavigationContainer } from '@react-navigation/native';
 
 import store from './src/store/store';
+import { checkIfAuthenticated } from './src/store/actions/auth';
 import RootNavigator from './src/navigator/RootNavigator';
 
 const fetchFonts = () => {
@@ -16,14 +17,21 @@ const fetchFonts = () => {
 };
 
 const App = () => {
-  const [fontLoaded, setFontLoaded] = useState(false);
+  const [dataLoaded, setDataLoaded] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  if (!fontLoaded) {
+  const loadData = async () => {
+    await fetchFonts();
+    const authStatus = await checkIfAuthenticated();
+    setIsAuthenticated(authStatus);
+  };
+
+  if (!dataLoaded) {
     return (
       <AppLoading
-        startAsync={fetchFonts}
-        onFinish={() => setFontLoaded(true)}
-        onError={() => console.log('Error loading fonts!')}
+        startAsync={loadData}
+        onFinish={() => setDataLoaded(true)}
+        onError={() => console.log('Error loading data!')}
       />
     );
   }
@@ -31,7 +39,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <RootNavigator />
+        <RootNavigator isAuthenticated={isAuthenticated} />
       </NavigationContainer>
     </Provider>
   );

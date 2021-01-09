@@ -21,7 +21,6 @@ export const login = (email, password, nav) => async dispatch => {
     await AsyncStorage.setItem('code-camp-token', data.token);
     const userData = await getCurrentUser(data.token);
     dispatch({ type: LOGIN, payload: userData });
-    ToastAndroid.show('Welcome', ToastAndroid.SHORT);
     nav.replace('home');
   } catch (error) {
     console.log(error);
@@ -43,7 +42,6 @@ export const loadUser = () => async dispatch => {
   try {
     dispatch({ type: TOGGLE_AUTH_LOADING });
     const token = await AsyncStorage.getItem('code-camp-token');
-    console.log(token);
     if (!token) {
       dispatch({ type: TOGGLE_AUTH_LOADING });
       return;
@@ -55,8 +53,17 @@ export const loadUser = () => async dispatch => {
   }
 };
 
+export const checkIfAuthenticated = async () => {
+  const token = await AsyncStorage.getItem('code-camp-token');
+  return token;
+};
+
 const getCurrentUser = async token => {
   try {
-    const res = await axios.post('/auth/me');
+    const res = await axios.get('/auth/me', {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const data = res.data;
+    return data.data;
   } catch (error) {}
 };

@@ -33,7 +33,7 @@ const RegisterScreen = ({ navigation }) => {
     initialRegisterData
   );
 
-  const loginHandler = () => {
+  const registerHandler = () => {
     const { name, email, password, confirmPassword, role } = registerData;
     if (!name || !email || !password || !confirmPassword) {
       ToastAndroid.show('Please fill all fields', ToastAndroid.SHORT);
@@ -90,7 +90,7 @@ const RegisterScreen = ({ navigation }) => {
             onChange={value => setRegisterData({ type: 'role', value })}
             options={roles}
           />
-          <CustomButton text='REGISTER' onPress={loginHandler} />
+          <CustomButton text='REGISTER' onPress={registerHandler} />
           <CustomButton
             text='LOGIN INSTEAD'
             onPress={() => navigation.navigate('login')}

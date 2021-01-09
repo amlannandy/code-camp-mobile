@@ -24,7 +24,7 @@ const initialLoginData = {
 
 const LoginScreen = ({ navigation }) => {
   const dispatch = useDispatch();
-  const { isLoading, isAuthenticated } = useSelector(state => state.auth);
+  const isLoading = useSelector(state => state.auth.isLoading);
   const [loginData, setLoginData] = useReducer(formReducer, initialLoginData);
 
   useEffect(() => {
@@ -66,10 +66,6 @@ const LoginScreen = ({ navigation }) => {
       />
     </View>
   );
-
-  if (!isLoading && isAuthenticated) {
-    navigation.replace('home');
-  }
 
   return (
     <View style={styles.screen}>
