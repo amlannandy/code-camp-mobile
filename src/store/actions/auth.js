@@ -27,6 +27,25 @@ export const login = (email, password, nav) => async dispatch => {
   }
 };
 
+export const register = (user, nav) => async dispatch => {
+  try {
+    dispatch({ type: TOGGLE_AUTH_LOADING });
+    const res = await axios.post('/auth/register', { ...user });
+    const data = res.data;
+    console.log(data);
+    if (!data.success) {
+      ToastAndroid.show(data.error, ToastAndroid.SHORT);
+      return;
+    }
+    await AsyncStorage.setItem('code-camp-token', data.token);
+    const userData = await getCurrentUser(data.token);
+    dispatch({ type: LOGIN, payload: userData });
+    nav.replace('home');
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const logout = nav => async dispatch => {
   try {
     dispatch({ type: TOGGLE_AUTH_LOADING });
