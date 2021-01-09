@@ -14,10 +14,6 @@ export const login = (email, password, nav) => async dispatch => {
     dispatch({ type: TOGGLE_AUTH_LOADING });
     const res = await axios.post('/auth/login', { email, password });
     const data = res.data;
-    if (!data.success) {
-      ToastAndroid.show(data.error, ToastAndroid.SHORT);
-      return;
-    }
     await AsyncStorage.setItem('code-camp-token', data.token);
     const userData = await getCurrentUser(data.token);
     dispatch({ type: LOGIN, payload: userData });
@@ -32,14 +28,9 @@ export const register = (user, nav) => async dispatch => {
     dispatch({ type: TOGGLE_AUTH_LOADING });
     const res = await axios.post('/auth/register', { ...user });
     const data = res.data;
-    console.log(data);
-    if (!data.success) {
-      ToastAndroid.show(data.error, ToastAndroid.SHORT);
-      return;
-    }
     await AsyncStorage.setItem('code-camp-token', data.token);
     const userData = await getCurrentUser(data.token);
-    dispatch({ type: LOGIN, payload: userData });
+    dispatch({ type: REGISTER, payload: userData });
     nav.replace('home');
   } catch (error) {
     console.log(error);
@@ -70,6 +61,10 @@ export const loadUser = () => async dispatch => {
   } catch (error) {
     dispatch({ type: TOGGLE_AUTH_LOADING });
   }
+};
+
+export const toggleAuthLoading = async dispatch => {
+  dispatch({ type: TOGGLE_AUTH_LOADING });
 };
 
 export const checkIfAuthenticated = async () => {
