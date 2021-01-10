@@ -2,6 +2,7 @@ export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const REGISTER = 'REGISTER';
 export const LOAD_USER = 'LOAD_USER';
+export const UPDATE_USER = 'UPDATE_USER';
 export const TOGGLE_AUTH_LOADING = 'TOGGLE_AUTH_LOADING';
 
 const initialState = {
@@ -17,6 +18,7 @@ export default (state = initialState, action) => {
     case LOGIN:
     case REGISTER:
     case LOAD_USER:
+    case UPDATE_USER:
       return {
         ...state,
         user: payload,

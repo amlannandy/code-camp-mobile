@@ -6,6 +6,7 @@ import {
   LOAD_USER,
   TOGGLE_AUTH_LOADING,
   LOGOUT,
+  UPDATE_USER,
 } from '../reducers/auth';
 import axios from '../../utils/axios';
 
@@ -41,8 +42,8 @@ export const logout = nav => async dispatch => {
   try {
     dispatch({ type: TOGGLE_AUTH_LOADING });
     await AsyncStorage.removeItem('code-camp-token');
-    dispatch({ type: LOGOUT });
     nav.replace('login');
+    dispatch({ type: LOGOUT });
   } catch (error) {
     dispatch({ type: TOGGLE_AUTH_LOADING });
   }
@@ -60,6 +61,23 @@ export const loadUser = () => async dispatch => {
     dispatch({ type: LOAD_USER, payload: userData });
   } catch (error) {
     dispatch({ type: TOGGLE_AUTH_LOADING });
+  }
+};
+
+export const updateUserDetails = (name, email, nav) => async dispatch => {
+  try {
+    dispatch({ type: TOGGLE_AUTH_LOADING });
+    const token = await AsyncStorage.getItem('code-camp-token');
+    const res = await axios.put(
+      '/auth/updatedetails',
+      { name, email },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    const userData = res.data.data;
+    dispatch({ type: UPDATE_USER, payload: userData });
+    nav.navigate('profile');
+  } catch (error) {
+    console.log(error);
   }
 };
 

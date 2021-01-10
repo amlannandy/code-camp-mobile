@@ -11,11 +11,13 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.defaults.headers.post['Content-Type'] = 'application/json';
+axiosInstance.defaults.headers.put['Content-Type'] = 'application/json';
 
 axiosInstance.interceptors.response.use(
   req => req,
   err => {
     const data = err.response.data;
+    console.log(data);
     const route = err.response.config.url;
     if (route.startsWith('/auth')) {
       store.dispatch({ type: TOGGLE_AUTH_LOADING });

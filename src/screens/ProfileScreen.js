@@ -34,7 +34,7 @@ const ProfileScreen = ({ navigation }) => {
   };
 
   const logoutHandler = () => {
-    dispatch(logout());
+    dispatch(logout(navigation));
   };
 
   return (
