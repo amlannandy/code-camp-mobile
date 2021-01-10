@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   StyleSheet,
   View,
@@ -23,6 +23,7 @@ const initialLoginData = {
 };
 
 const LoginScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
   const isLoading = useSelector(state => state.auth.isLoading);
   const [loginData, setLoginData] = useReducer(formReducer, initialLoginData);
 

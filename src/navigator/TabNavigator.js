@@ -16,16 +16,23 @@ const TabNavigator = () => {
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
           if (route.name === 'home') {
-            iconName = 'home';
+            iconName = focused ? 'home' : 'home-outline';
           } else if (route.name === 'profile-stack') {
-            iconName = 'account';
+            iconName = focused ? 'person' : 'person-outline';
           }
-          return <Ionicons name={iconName} color={color} size={size} />;
+          return (
+            <Ionicons
+              name={iconName}
+              color={color}
+              style={{ opacity: focused ? 1 : 0.7 }}
+              size={size}
+            />
+          );
         },
       })}
       tabBarOptions={{
-        activeTintColor: 'white',
-        inactiveTintColor: 'grey',
+        activeTintColor: '#fdfdfd',
+        inactiveTintColor: '#fdfdfd',
         activeBackgroundColor: Colors.primary,
         inactiveBackgroundColor: Colors.primary,
         tabStyle: {

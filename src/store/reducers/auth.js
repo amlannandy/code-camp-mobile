@@ -7,7 +7,7 @@ export const TOGGLE_AUTH_LOADING = 'TOGGLE_AUTH_LOADING';
 const initialState = {
   isLoading: false,
   isAuthenticated: false,
-  user: null,
+  user: {},
   token: null,
 };
 
