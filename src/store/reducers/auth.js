@@ -7,12 +7,8 @@ export const TOGGLE_AUTH_LOADING = 'TOGGLE_AUTH_LOADING';
 const initialState = {
   isLoading: false,
   isAuthenticated: false,
-  name: null,
-  email: null,
-  userId: null,
-  token: '',
-  role: null,
-  createdAt: null,
+  user: null,
+  token: null,
 };
 
 export default (state = initialState, action) => {
@@ -23,7 +19,7 @@ export default (state = initialState, action) => {
     case LOAD_USER:
       return {
         ...state,
-        ...payload,
+        user: payload,
         isLoading: false,
         isAuthenticated: true,
       };

@@ -1,5 +1,5 @@
-import React, { useReducer, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useReducer } from 'react';
+import { useSelector } from 'react-redux';
 import {
   StyleSheet,
   View,
@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 import Colors from '../constants/Colors';
-import { login, loadUser } from '../store/actions/auth';
+import { login } from '../store/actions/auth';
 import isEmailValid from '../utils/emailValid';
 import formReducer from '../utils/formReducer';
 import ShowcaseImage from '../images/showcase.jpg';
@@ -23,13 +23,8 @@ const initialLoginData = {
 };
 
 const LoginScreen = ({ navigation }) => {
-  const dispatch = useDispatch();
   const isLoading = useSelector(state => state.auth.isLoading);
   const [loginData, setLoginData] = useReducer(formReducer, initialLoginData);
-
-  useEffect(() => {
-    dispatch(loadUser());
-  }, []);
 
   const loginHandler = () => {
     const { email, password } = loginData;
